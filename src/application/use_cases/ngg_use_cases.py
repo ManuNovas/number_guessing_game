@@ -7,7 +7,6 @@ class NGGUseCases(NGGInputPort):
     def play(self):
         print("I'm thinking of a number between 1 and 100.")
         number = randrange(1, 100)
-        print("You have 5 chances to guess the correct number.")
         print("")
         print("Please select the difficulty level:")
         print("1. Easy (10 chances)")
@@ -30,6 +29,7 @@ class NGGUseCases(NGGInputPort):
             difficulty_label = "Hard"
             max_attempts = 3
         print(f"Great! You have selected the {difficulty_label} difficulty level.")
+        print(f"You have {str(max_attempts)} chances to guess the correct number.")
         print("Let's start the game!")
         print("")
         attempts = 1

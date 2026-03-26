@@ -10,3 +10,4 @@ class NGGInputAdapter:
     def main(self):
         print("Welcome to the Number Guessing Game!")
         self.input_port.play()
+        return 0
