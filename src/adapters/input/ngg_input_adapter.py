@@ -8,6 +8,10 @@ class NGGInputAdapter:
         self.input_port = input_port
 
     def main(self):
-        print("Welcome to the Number Guessing Game!")
-        self.input_port.play()
+        close = False
+        while not close:
+            print("Welcome to the Number Guessing Game!")
+            self.input_port.play()
+            close_input = input("Would you like to play again? (y/n): ")
+            close = close_input.lower() == "n"
         return 0
