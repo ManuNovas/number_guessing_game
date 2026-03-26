@@ -1,4 +1,5 @@
 from random import randrange
+from time import time, gmtime, strftime
 
 from src.application.ports.input import NGGInputPort
 
@@ -31,6 +32,7 @@ class NGGUseCases(NGGInputPort):
         print(f"Great! You have selected the {difficulty_label} difficulty level.")
         print(f"You have {str(max_attempts)} chances to guess the correct number.")
         print("Let's start the game!")
+        start_time = time()
         print("")
         attempts = 1
         while attempts <= max_attempts:
@@ -41,7 +43,10 @@ class NGGUseCases(NGGInputPort):
             elif number > guess:
                 print(f"Incorrect! The number is greater than {guess}")
             else:
-                print(f"Congratulations! You guessed the correct number in {attempts} attempts.")
+                guess_time = time() - start_time
+                gm_time = gmtime(guess_time)
+                format_time = strftime("%H:%M:%S", gm_time)
+                print(f"Congratulations! You guessed the correct number in {attempts} attempts at {format_time}.")
                 return 200
             attempts += 1
         print(f"Game over! The number was {str(number)}")
