@@ -31,3 +31,8 @@ class NGGOutputAdapter(NGGOutputPort):
         self._open()
         self.data.append(entity)
         self._save()
+
+    def sort_by(self, column: str, direction: str):
+        self._open()
+        reverse = direction == "desc"
+        return sorted(self.data, key=lambda item: item[column], reverse=reverse)

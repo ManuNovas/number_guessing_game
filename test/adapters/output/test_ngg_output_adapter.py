@@ -34,3 +34,67 @@ class TestNGGOutputAdapter(TestCase):
         score = Score(1, 1, 5, "00:00:10")
         self.adapter.create(score.__dict__)
         self.assertEqual(self.adapter.data, [score.__dict__])
+
+    def test_sort_by_asc(self):
+        self.adapter._open = MagicMock()
+        self.adapter.data = [
+            {
+                "id": 1,
+                "attempts": 5
+            },
+            {
+                "id": 2,
+                "attempts": 2
+            },
+            {
+                "id": 3,
+                "attempts": 3
+            },
+        ]
+        result = self.adapter.sort_by("attempts", "asc")
+        self.assertEqual(result, [
+            {
+                "id": 2,
+                "attempts": 2
+            },
+            {
+                "id": 3,
+                "attempts": 3
+            },
+            {
+                "id": 1,
+                "attempts": 5
+            },
+        ])
+
+    def test_sort_by_asc(self):
+        self.adapter._open = MagicMock()
+        self.adapter.data = [
+            {
+                "id": 1,
+                "attempts": 5
+            },
+            {
+                "id": 2,
+                "attempts": 2
+            },
+            {
+                "id": 3,
+                "attempts": 3
+            },
+        ]
+        result = self.adapter.sort_by("attempts", "desc")
+        self.assertEqual(result, [
+            {
+                "id": 1,
+                "attempts": 5
+            },
+            {
+                "id": 3,
+                "attempts": 3
+            },
+            {
+                "id": 2,
+                "attempts": 2
+            },
+        ])
