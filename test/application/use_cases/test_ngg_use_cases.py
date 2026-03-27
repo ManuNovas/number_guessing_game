@@ -1,6 +1,7 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
+from src.adapters.output import NGGOutputAdapter
 from src.application.use_cases import NGGUseCases
 
 
@@ -8,7 +9,10 @@ class TestNGGUseCases(TestCase):
     use_cases: NGGUseCases
 
     def setUp(self):
-        self.use_cases = NGGUseCases()
+        output_adapter = NGGOutputAdapter("test.json")
+        output_adapter.get_next_id = MagicMock(return_value=1)
+        output_adapter.create = MagicMock()
+        self.use_cases = NGGUseCases(output_adapter)
 
     @patch("builtins.input", side_effect=["1", "10", "90", "30", "80", "50"])
     @patch("src.application.use_cases.ngg_use_cases.randrange")

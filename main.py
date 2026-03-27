@@ -1,7 +1,9 @@
+from src.adapters.output import NGGOutputAdapter
 from src.application.use_cases import NGGUseCases
 from src.adapters.input import NGGInputAdapter
 
-use_cases = NGGUseCases()
-adapter = NGGInputAdapter(use_cases)
+output_adapter = NGGOutputAdapter("score.json")
+use_cases = NGGUseCases(output_adapter)
+input_adapter = NGGInputAdapter(use_cases)
 
-adapter.main()
+input_adapter.main()

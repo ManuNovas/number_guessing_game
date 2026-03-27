@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
+from src.adapters.output import NGGOutputAdapter
 from src.application.use_cases import NGGUseCases
 from src.adapters.input import NGGInputAdapter
 
@@ -9,7 +10,10 @@ class TestNGGInputAdapter(TestCase):
     adapter: NGGInputAdapter
 
     def setUp(self):
-        use_cases = NGGUseCases()
+        output_adapter = NGGOutputAdapter("test.json")
+        output_adapter.get_next_id = MagicMock(return_value=1)
+        output_adapter.create = MagicMock()
+        use_cases = NGGUseCases(output_adapter)
         self.adapter = NGGInputAdapter(use_cases)
 
     @patch("builtins.input", side_effect=["y", "y", "n"])

@@ -1,10 +1,17 @@
 from random import randrange
 from time import time, gmtime, strftime
 
+from src.domain.entites import Score
 from src.application.ports.input import NGGInputPort
+from src.application.ports.output import NGGOutputPort
 
 
 class NGGUseCases(NGGInputPort):
+    output_port: NGGOutputPort
+
+    def __init__(self, output_port: NGGOutputPort):
+        self.output_port = output_port
+
     def play(self):
         print("I'm thinking of a number between 1 and 100.")
         number = randrange(1, 100)
@@ -47,6 +54,13 @@ class NGGUseCases(NGGInputPort):
                 gm_time = gmtime(guess_time)
                 format_time = strftime("%H:%M:%S", gm_time)
                 print(f"Congratulations! You guessed the correct number in {attempts} attempts at {format_time}.")
+                score = Score(
+                    id=self.output_port.get_next_id(),
+                    difficulty=difficulty,
+                    attempts=attempts,
+                    time=format_time,
+                )
+                self.output_port.create(score.__dict__)
                 return 200
             attempts += 1
         print(f"Game over! The number was {str(number)}")
