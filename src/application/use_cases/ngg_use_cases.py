@@ -65,4 +65,21 @@ class NGGUseCases(NGGInputPort):
             attempts += 1
         print(f"Game over! The number was {str(number)}")
         return 202
-
+    
+    def get_high_scores(self) -> list[Score]:
+        entities = self.output_port.sort_by("attempts", "asc")
+        i = 0
+        scores = []
+        for entity in entities:
+            if i < 3:
+                score = Score(
+                    id=entity["id"],
+                    difficulty=entity["difficulty"],
+                    attempts=entity["attempts"],
+                    time=entity["time"],
+                )
+                scores.append(score)
+            else:
+                break
+            i += 1
+        return scores
