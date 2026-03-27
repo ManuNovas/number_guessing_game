@@ -1,0 +1,5 @@
+[run]
+omit = 
+    src/application/ports/*
+    test/*
+    main.py
